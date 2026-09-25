@@ -17,8 +17,13 @@ const inputBoxes = Array.from(document.querySelectorAll(".input-box"));
 const buttonGrid = document.getElementById("buttonGrid");
 const backspaceBtn = document.getElementById("backspaceBtn");
 const decideBtn = document.getElementById("decideBtn");
-const resultMessage = document.getElementById("resultMessage");
+const resultOverlay = document.getElementById("resultOverlay");
+const resultOverlayText = document.getElementById("resultOverlayText");
 const player = document.getElementById("player");
+
+const OVERLAY_DURATION_MS = 2200;
+let overlayTimer = null;
+let pendingOnHide = null;
 
 function getTodayEvent() {
   const now = new Date();
@@ -72,14 +77,12 @@ function renderInputBoxes() {
 function onKanaPress(char) {
   if (inputChars.length >= WORD_LENGTH) return;
   inputChars.push(char);
-  clearMessage();
   renderInputBoxes();
 }
 
 function onBackspace() {
   if (inputChars.length === 0) return;
   inputChars.pop();
-  clearMessage();
   renderInputBoxes();
 }
 
@@ -87,25 +90,37 @@ function onDecide() {
   if (inputChars.length !== WORD_LENGTH) return;
   const attempt = inputChars.join("");
   if (attempt === todayEvent.word) {
-    clearMessage();
     player.src = todayEvent.audio;
     player.play().catch((err) => {
       console.warn("音声の再生に失敗しました（音源ファイル未設置の可能性があります）", err);
     });
+    showResult("せいこう", "success", () => {
+      inputChars = [];
+      renderButtons();
+      renderInputBoxes();
+    });
   } else {
-    showMessage("……何も起こらない。もう一度。", "error");
-    renderButtons();
+    showResult("しっぱい", "error", () => {
+      renderButtons();
+    });
   }
 }
 
-function showMessage(text, type) {
-  resultMessage.textContent = text;
-  resultMessage.className = "result-message " + type;
+function showResult(text, type, onHide) {
+  resultOverlayText.textContent = text;
+  resultOverlayText.className = "result-overlay-text " + type;
+  resultOverlay.classList.add("show");
+  pendingOnHide = onHide || null;
+  clearTimeout(overlayTimer);
+  overlayTimer = setTimeout(hideResult, OVERLAY_DURATION_MS);
 }
 
-function clearMessage() {
-  resultMessage.textContent = "";
-  resultMessage.className = "result-message";
+function hideResult() {
+  resultOverlay.classList.remove("show");
+  clearTimeout(overlayTimer);
+  const cb = pendingOnHide;
+  pendingOnHide = null;
+  if (cb) cb();
 }
 
 function init() {
@@ -113,6 +128,7 @@ function init() {
   renderInputBoxes();
   backspaceBtn.addEventListener("click", onBackspace);
   decideBtn.addEventListener("click", onDecide);
+  resultOverlay.addEventListener("click", hideResult);
 }
 
 init();

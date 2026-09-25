@@ -9,6 +9,8 @@
   --color-muted: #7c7666;
   --color-success: #6f8f5a;
   --color-error: #a53030;
+  --color-blood: #b30000;
+  --color-blood-dark: #4a0000;
 }
 
 * {
@@ -81,10 +83,10 @@ body {
 
 .title {
   font-family: "Zen Antique", serif;
-  font-size: clamp(26px, 5.5vw, 36px);
+  font-size: clamp(38px, 9vw, 64px);
   margin: 0 0 28px;
-  color: #e4d9b8;
-  text-shadow: 0 0 14px rgba(165, 48, 48, 0.35), 0 2px 0 #000;
+  color: var(--color-blood);
+  text-shadow: 0 0 18px rgba(179, 0, 0, 0.55), 0 2px 0 #000;
   animation: flicker 6s infinite ease-in-out;
 }
 
@@ -96,15 +98,15 @@ body {
 }
 
 .input-box {
-  width: clamp(48px, 14vw, 72px);
-  height: clamp(48px, 14vw, 72px);
+  width: clamp(64px, 18vw, 100px);
+  height: clamp(64px, 18vw, 100px);
   border: 2px solid var(--color-surface-line);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Zen Antique", serif;
-  font-size: clamp(24px, 6vw, 32px);
+  font-size: clamp(32px, 8vw, 48px);
   font-weight: bold;
   background: #0f120c;
   color: #e4d9b8;
@@ -117,13 +119,15 @@ body {
 
 .button-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, clamp(48px, 14vw, 72px));
+  justify-content: center;
   gap: 10px;
   margin-bottom: 24px;
 }
 
 .kana-btn {
-  aspect-ratio: 1 / 1;
+  width: clamp(48px, 14vw, 72px);
+  height: clamp(48px, 14vw, 72px);
   border: 1px solid var(--color-surface-line);
   border-radius: 6px;
   background: #14160f;
@@ -185,22 +189,87 @@ body {
   transform: scale(0.97);
 }
 
-.result-message {
-  min-height: 28px;
-  font-family: "Zen Antique", serif;
-  font-size: 18px;
-  letter-spacing: 0.08em;
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background 0.3s ease;
+  z-index: 100;
+}
+
+.result-overlay.show {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.88);
+  pointer-events: auto;
+}
+
+.result-overlay-text {
   margin: 0;
+  font-family: "Zen Antique", serif;
+  font-size: clamp(48px, 14vw, 120px);
+  letter-spacing: 0.15em;
+  transform: scale(0.85);
+  transition: transform 0.3s ease;
 }
 
-.result-message.success {
-  color: #b8cf9e;
-  text-shadow: 0 0 10px rgba(111, 143, 90, 0.5);
+.result-overlay.show .result-overlay-text {
+  transform: scale(1);
 }
 
-.result-message.error {
-  color: var(--color-error);
-  text-shadow: 0 0 10px rgba(165, 48, 48, 0.4);
+.result-overlay-text.success {
+  color: #b8ffb0;
+  text-shadow: 0 0 40px rgba(120, 255, 120, 0.7), 0 4px 0 #000;
+}
+
+.result-overlay-text.error {
+  color: #ff4d4d;
+  text-shadow: 0 0 40px rgba(255, 40, 40, 0.75), 0 4px 0 #000;
+}
+
+.blood-drips {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.drip {
+  position: absolute;
+  top: 0;
+  width: 5px;
+  height: 0;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(180deg, var(--color-blood) 0%, var(--color-blood-dark) 75%, transparent 100%);
+  animation: drip-fall 6s ease-in infinite;
+}
+
+.drip::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-blood-dark);
+  box-shadow: 0 0 8px rgba(179, 0, 0, 0.6);
+}
+
+@keyframes drip-fall {
+  0% { height: 0; opacity: 0.95; }
+  55% { height: 130px; opacity: 0.95; }
+  75% { height: 150px; opacity: 0.55; }
+  100% { height: 155px; opacity: 0; }
 }
 
 @keyframes flicker {
