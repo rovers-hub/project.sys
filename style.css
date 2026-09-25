@@ -119,7 +119,7 @@ body {
 
 .button-grid {
   display: grid;
-  grid-template-columns: repeat(4, clamp(48px, 14vw, 72px));
+  grid-template-columns: repeat(2, clamp(48px, 14vw, 72px));
   justify-content: center;
   gap: 10px;
   margin-bottom: 24px;
