@@ -87,7 +87,7 @@ function onDecide() {
   if (inputChars.length !== WORD_LENGTH) return;
   const attempt = inputChars.join("");
   if (attempt === todayEvent.word) {
-    showMessage("……扉が、開いた。", "success");
+    clearMessage();
     player.src = todayEvent.audio;
     player.play().catch((err) => {
       console.warn("音声の再生に失敗しました（音源ファイル未設置の可能性があります）", err);

@@ -82,16 +82,10 @@ body {
 .title {
   font-family: "Zen Antique", serif;
   font-size: clamp(26px, 5.5vw, 36px);
-  margin: 0 0 12px;
+  margin: 0 0 28px;
   color: #e4d9b8;
   text-shadow: 0 0 14px rgba(165, 48, 48, 0.35), 0 2px 0 #000;
   animation: flicker 6s infinite ease-in-out;
-}
-
-.flavor-text {
-  margin: 0 0 20px;
-  color: var(--color-muted);
-  font-size: 14px;
 }
 
 .input-row {
