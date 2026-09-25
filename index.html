@@ -11,28 +11,24 @@
 </head>
 <body>
   <main class="app">
-    <section class="panel-left">
-      <h1 class="title">廃校に眠る合言葉</h1>
-      <p class="flavor-text">消えた生徒たちが遺した言葉を、選び出し唱えよ……</p>
+    <h1 class="title">廃校に眠る合言葉</h1>
+    <p class="flavor-text">消えた生徒たちが遺した言葉を、選び出し唱えよ……</p>
 
-      <div class="input-row" id="inputRow">
-        <div class="input-box" data-index="0"></div>
-        <div class="input-box" data-index="1"></div>
-        <div class="input-box" data-index="2"></div>
-        <div class="input-box" data-index="3"></div>
-      </div>
+    <div class="input-row" id="inputRow">
+      <div class="input-box" data-index="0"></div>
+      <div class="input-box" data-index="1"></div>
+      <div class="input-box" data-index="2"></div>
+      <div class="input-box" data-index="3"></div>
+    </div>
 
-      <div class="controls">
-        <button type="button" id="backspaceBtn" class="control-btn">一文字消す</button>
-        <button type="button" id="decideBtn" class="control-btn primary" disabled>唱える</button>
-      </div>
+    <div class="button-grid" id="buttonGrid"></div>
 
-      <p class="result-message" id="resultMessage" aria-live="polite"></p>
-    </section>
+    <div class="controls">
+      <button type="button" id="backspaceBtn" class="control-btn">一文字消す</button>
+      <button type="button" id="decideBtn" class="control-btn primary" disabled>唱える</button>
+    </div>
 
-    <section class="panel-right">
-      <div class="button-grid" id="buttonGrid"></div>
-    </section>
+    <p class="result-message" id="resultMessage" aria-live="polite"></p>
 
     <audio id="player"></audio>
   </main>
