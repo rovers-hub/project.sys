@@ -1,7 +1,7 @@
 // TODO: 実際の音源ファイルに差し替えること
 const EVENTS = [
-  { date: "2026-09-26", word: "みつけた", audio: "audio/true.mp3" },
-  { date: "2026-09-27", word: "しんれい", audio: "audio/true.mp3" },
+  { date: "2026-09-26", word: "しんれい", audio: "audio/true.mp3" },
+  { date: "2026-09-27", word: "みつけた", audio: "audio/true.mp3" },
 ];
 
 const HIRAGANA_POOL =
